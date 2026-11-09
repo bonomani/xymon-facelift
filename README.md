@@ -31,9 +31,7 @@ need first, and is out of scope here.
 ## Contributing
 
 Discussion happens in the issues of this repository. Changes come as pull
-requests; see the Xymon
-[contributing rules](https://github.com/xymon-monitoring/xymon/blob/main/CONTRIBUTING.md),
-which apply here too where they fit.
+requests; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
