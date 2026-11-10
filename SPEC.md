@@ -21,6 +21,11 @@ out of scope here.
   request in the Xymon repository.
 - **Every rule is enforced by a test**, so a change that breaks a rule fails at
   once.
+- **Two levels of rules.** Every part meets the rules for every part, which is
+  enough to be switched on by choice. A part that could one day replace the
+  classic look as the default also meets the stricter rules of "Safe as the
+  default". Making a part the default is still a separate decision, because it
+  changes the default that the first principle keeps.
 
 ## Scope
 
@@ -29,7 +34,9 @@ In scope:
 - **Skins:** icon sets beside the classic GIFs, selected with `XYMONSKIN`.
 - **Layouts:** stylesheets and scripts that restyle the pages, loaded through
   `XYMONBODYFOOTER`. This includes moving the info, trends and clientlog
-  columns, which are not tests, to the start or the end, or merging them.
+  columns, which are not tests, to the start or the end, or merging them: a
+  change to the page in the browser, allowed in a layout that is switched on
+  by choice, not in one that is safe as the default (rule 18).
 - **The Look and feel page:** previews a layout and a skin on a real Xymon page,
   and shows the commands that make the choice permanent.
 - **xymonsettings.sh:** shows and changes `xymonserver.cfg` settings, and
@@ -52,7 +59,9 @@ Out of scope:
 ## Rules
 
 Each rule names the test that enforces it and where that test lives. "Not
-written yet" means the rule holds by review until its test exists.
+written yet" means the rule holds by review until its test exists. Rules 1 to
+17 hold for every part; rules 18 to 22 are the stricter level for a part that
+is safe as the default.
 
 ### Xymon itself (tests in the Xymon repository)
 
@@ -147,3 +156,77 @@ place. Switching the part off removes only what the facelift added.
 Test: start from a `xymonserver.cfg` with a local `XYMONBODYFOOTER`, switch a
 layout on and off, and check that the local value is kept and then restored.
 Not written yet.
+
+**13. The page still works when a file fails.**
+Rule 8 covers the refresh; this covers the page itself. If a stylesheet,
+script or icon of the facelift does not load, the page shows the same
+information as without the facelift, and every link and form still works.
+Test: render each page with every layout and skin, with their files missing,
+and check that every status and link of the board is still there. Not written
+yet.
+
+**14. Light on large pages, and still unless chosen otherwise.**
+No selector that scans the whole page for each element, and no script whose
+work grows faster than the number of hosts and tests: a slow page delays an
+alarm. Icons move only when the administrator chose moving icons: every skin
+has a still variant, used when a still set is chosen, and a still directory
+is never made to move. The Debian and Ubuntu packages point `XYMONSKIN` at
+`gifs/static` by default and own that directory, so the facelift leaves it
+as it is (rule 6).
+Test: review for the selectors and scripts, as a time bound would be flaky in
+CI; a check that no file of a still set is animated. Not written yet.
+
+**15. No status hidden at any width.**
+A layout may rearrange a page for a small screen, but never hides a status; a
+column it moves or merges stays reachable, and a large table scrolls instead of
+breaking.
+Test: render each page at a narrow width with every layout, and check that
+every status of the board is in the page and visible. Not written yet.
+
+**16. One layout, every page.**
+A layout reaches the status pages, the reports, the administration pages and
+the CGIs alike, and must not break the pages it was not written for.
+Test: render every page type with every layout, and check that its forms and
+tables are intact. Not written yet.
+
+**17. No positional selectors.**
+A layout finds what it styles by what it is (a class, a `SUMMARY` attribute, an
+icon's file name), not by its position in the page, which moves with the
+number of hosts and tests.
+Test: review, until a check for it exists.
+
+### Safe as the default (tests in this repository)
+
+A part that could replace the classic look as the default meets rules 1 to 17
+and these, with still icons only. Meeting them makes a part a candidate; it
+does not make it the default (see Principles).
+
+**18. The page is not changed in the browser.**
+Stylesheets only: no script adds, removes or moves an element, and every table
+keeps its rows, columns and cells as Xymon writes them. Scripts and parsers
+that read the page see what they see today.
+Test: render each page with the part on, and compare its structure in the
+browser with the page Xymon wrote. Not written yet.
+
+**19. Works without JavaScript.**
+With scripts switched off or blocked, a Content-Security-Policy included, the
+page shows everything and refreshes as it does today.
+Test: render each page with the part on and scripts disabled, and check the
+statuses and the META refresh. Not written yet.
+
+**20. Not by colour alone.**
+Each status can be told apart without seeing colour, by its shape or its text,
+and every status keeps enough contrast against its background.
+Test: render each status with the part on, and check that each has a
+distinct shape or text and meets a contrast ratio. Not written yet.
+
+**21. Every page type, older browsers included.**
+The part is checked on every page type, and in older browsers, including the
+pages' deprecated attributes and inline styles.
+Test: the tests of rules 16, 18 and 19 run in each supported browser; which
+browsers are supported is decided with the first candidate. Not written yet.
+
+**22. Proven by choice first.**
+A part is proposed as the default only after it has been used as an opt-in,
+with the feedback of the people who used it.
+Test: none; checked by the decision that would make it the default.
