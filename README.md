@@ -9,15 +9,8 @@ need first, and is out of scope here.
 
 ## Rules
 
-- **Xymon's default stays as it is.** Without any setting from this project, the
-  pages Xymon generates are byte for byte what they are today, keep their META
-  refresh, and load no extra files.
-- **Everything here is opt-in.** An administrator installs it and switches it on,
-  per installation, and can switch it off again.
-- **Xymon itself only gets small changes that are off by default**, made in the
-  Xymon repository through its own pull requests: the page refresh as a setting
-  whose default is today's META line, opt-in icon classes, and text icons.
-- **The rules are enforced by tests**, so a change that breaks one fails at once.
+Xymon's default stays as it is, and everything here is opt-in. The rules, and
+the test that enforces each, are in [SPEC.md](SPEC.md).
 
 ## Planned contents
 
