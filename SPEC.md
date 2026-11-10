@@ -64,7 +64,8 @@ the META refresh. The rest (snapshot, reports, WML, RSS) is added step by step.
 Test: render the pages from a fixed status board, once with the pull request's
 base commit and once with its head, and compare them after masking date, time
 and version. The reference is generated in the test, not stored in the tree.
-Starting point: xymon-monitoring/xymon#605. Not written yet.
+Starting point: the shared status board in `tests/lib/xymongen-board.sh`
+(xymon-monitoring/xymon#605). Not written yet.
 
 **2. The META refresh stays.**
 Every page that refreshes today carries exactly the same
@@ -94,8 +95,9 @@ Xymon installed changed. Not written yet.
 
 **6. Opt-in and reversible.**
 Installing the facelift changes nothing visible until a part is switched on. It
-never overwrites a file Xymon ships, and switching a part off brings back the
-default pages unchanged.
+never overwrites a file Xymon ships; a setting in `xymonserver.cfg` is changed
+only as rule 12 says. Switching a part off brings back the default pages
+unchanged.
 Test: install, render, switch on and off again, render, and compare with the
 pages before installing. Not written yet.
 
