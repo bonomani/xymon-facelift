@@ -70,11 +70,15 @@ With the default configuration, the pages Xymon generates are byte for byte
 the same as before the change. First every page that goes through the code a
 pull request changes: the pages that write status icons, and the headers with
 the META refresh. The rest (snapshot, reports, WML, RSS) is added step by step.
-Test: render the pages from a fixed status board, once with the pull request's
-base commit and once with its head, and compare them after masking date, time
-and version. The reference is generated in the test, not stored in the tree.
-Starting point: the shared status board in `tests/lib/xymongen-board.sh`
-(xymon-monitoring/xymon#605). Not written yet.
+Test: render the pages from the shared status board in
+`tests/lib/xymongen-board.sh` (xymon-monitoring/xymon#605), mask date, time
+and version, and compare them with reference pages stored in the Xymon tree.
+A pull request that changes the HTML on purpose regenerates the reference with
+the test's update mode, so the change shows in its diff, where the reviewer
+judges it. The update mode refuses to save the pages of a run that failed.
+Besides the comparison, the test checks a few things on its own, so that a
+broken reference does not become the norm unnoticed: each status in its colour,
+and the META refresh of rule 2. Not written yet.
 
 **2. The META refresh stays.**
 Every page that refreshes today carries exactly the same
@@ -84,8 +88,8 @@ Test: check that line in each refreshing page. Not written yet.
 **3. No extra files are loaded by default.**
 With the default configuration, a page references no stylesheet, script or
 image that it did not reference before.
-Test: compare the `href` and `src` references with the reference output of
-rule 1. Not written yet.
+Test: compare the `href` and `src` references with those of the reference
+pages of rule 1. Not written yet.
 
 **4. Every new setting is off by default.**
 Its default reproduces today's output, and it is documented in
