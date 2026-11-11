@@ -134,10 +134,13 @@ Test: check every shipped HTML, CSS and JavaScript file for references to
 another host. Not written yet.
 
 **11. Plain ASCII files.**
-Every shipped stylesheet, script and HTML file is plain ASCII. The Xymon pages
-may be served without a character set, and a browser then reads them in its
-own default one. A character outside ASCII is written as an escape (`\u2713`
-in JavaScript and CSS, `&#x2713;` in HTML).
+Every shipped stylesheet, script and HTML file is plain ASCII. The character
+set of the Xymon pages is a setting, `HTMLCONTENTTYPE`: UTF-8 by default, but
+the shipped `xymonserver.cfg` suggests another one, such as iso-8859-1, where
+the hosts send that; stylesheets and scripts get whatever character set the
+web server sends with them. Plain ASCII reads the same in each. A character outside
+ASCII is written as an escape (`\u2713` in JavaScript and CSS, `&#x2713;` in
+HTML).
 Test: check every shipped text file for bytes outside ASCII. Not written yet.
 
 **12. An existing setting is added to, never replaced.**
