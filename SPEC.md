@@ -74,11 +74,14 @@ change its pages: such a change regenerates the reference in its own pull
 request, where it shows in the diff, and the facelift's tests against Xymon's
 main catch a layout it breaks. First every page that goes through the code a
 facelift pull request changes: the pages that write status icons, and the
-headers with the META refresh. The rest (snapshot, reports, WML, RSS) is added
-step by step.
-Test: render the pages from the shared status board in
-`tests/lib/xymongen-board.sh` (xymon-monitoring/xymon#605), mask date, time
-and version, and compare them with reference pages stored in the Xymon tree.
+headers with the META refresh, both in the static pages xymongen writes and in
+the pages the CGIs return (svcstatus first, then history and eventlog, then
+the others). The rest (snapshot, reports, WML, RSS) is added step by step.
+Test: render the static pages from the shared status board in
+`tests/lib/xymongen-board.sh` (xymon-monitoring/xymon#605), and run each CGI
+with fixed input (`tests/lib/svcstatus-cgi.sh`, `tests/lib/fake-xymond.c`);
+mask date, time, ages and version, and compare the pages with reference pages
+stored in the Xymon tree.
 A pull request that changes the HTML on purpose regenerates the reference with
 the test's update mode, so the change shows in its diff, where the reviewer
 judges it. The update mode refuses to save the pages of a run that failed.
